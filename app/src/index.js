@@ -4,7 +4,7 @@ const { getKafkaConnectSettings, getKafkaTopicName, getKafkaGroupId } = require(
 const kafka = new Kafka(getKafkaConnectSettings());
 const topicName = getKafkaTopicName();
 
-const consumer = kafka.consumer({ 
+const consumer = kafka.consumer({
   groupId: getKafkaGroupId(),
 });
 
@@ -58,6 +58,13 @@ async function createTopicIfNeeded(topicName) {
     await admin.createTopics({
       topics: [{
         topic: topicName,
+        numPartitions: 1,
+      }]
+    });
+    console.log(`Creating the second topic`);
+    await admin.createTopics({
+      topics: [{
+        topic: "second",
         numPartitions: 1,
       }]
     });

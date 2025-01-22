@@ -1,5 +1,5 @@
 services:
-  app:
+  consumer:
     build:
       context: ./
       target: dev
@@ -69,4 +69,4 @@ services:
     environment:
       KAFKA_BROKERS: kafka:9093
       PUBLISHER_NAME: publisher_two
-      KAFKA_TOPIC: demo
+      KAFKA_TOPIC: second
