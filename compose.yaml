@@ -70,3 +70,14 @@ services:
       KAFKA_BROKERS: kafka:9093
       PUBLISHER_NAME: publisher_two
       KAFKA_TOPIC: second
+
+  publisher-3:
+    image: node:lts
+    working_dir: /usr/local/app
+    command: bash -c "yarn install && yarn dev"
+    volumes:
+      - ./dev/publisher:/usr/local/app
+    environment:
+      KAFKA_BROKERS: kafka:9093
+      PUBLISHER_NAME: publisher_three
+      KAFKA_TOPIC: second
