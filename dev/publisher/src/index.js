@@ -1,4 +1,3 @@
-const express = require("express");
 const { Kafka } = require("kafkajs");
 const { getKafkaConnectSettings, getKafkaTopicName } = require("./config");
 
@@ -10,25 +9,14 @@ const producer = kafka.producer();
 const run = async () => {
   await producer.connect();
 
-  const app = express();
-  app.use(express.json());
-  app.use(express.static(__dirname + "/public"));
-
-  app.post("/message", async (req, res) => {
-    const message = req.body.message;
-    await producer.send({
-      topic: topicName,
-      messages: [
-        {
-          value: message,
-        },
-      ],
-    });
-
-    res.json({ message: "Message sent successfully" });
+  await producer.send({
+    topic: topicName,
+    messages: [
+      {
+        value: `sent from ${process.env.PUBLISHER_NAME}`,
+      },
+    ],
   });
-
-  app.listen(3000, () => console.log("Listening on port 3000"));
 };
 
 run().catch(console.error);

@@ -49,13 +49,24 @@ services:
     depends_on:
       - kafka
 
-  publisher:
+  publisher-1:
     image: node:lts
     working_dir: /usr/local/app
     command: bash -c "yarn install && yarn dev"
-    ports:
-      - 3000:3000
     volumes:
       - ./dev/publisher:/usr/local/app
     environment:
       KAFKA_BROKERS: kafka:9093
+      PUBLISHER_NAME: publisher_one
+      KAFKA_TOPIC: demo
+
+  publisher-2:
+    image: node:lts
+    working_dir: /usr/local/app
+    command: bash -c "yarn install && yarn dev"
+    volumes:
+      - ./dev/publisher:/usr/local/app
+    environment:
+      KAFKA_BROKERS: kafka:9093
+      PUBLISHER_NAME: publisher_two
+      KAFKA_TOPIC: demo
